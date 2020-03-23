@@ -1,0 +1,12 @@
+{% extends "information/base.html" %}
+
+{% block content %}
+  <p>咨询场地信息</p>
+  <p>账号：{{cur.user}}</p>
+  <p>姓名：{{cur.user.first_name}}</p>
+  <form action="{% url 'users:place' %}" method='post'>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button name="submit">Submit</button>
+  </form>
+{% endblock content %}

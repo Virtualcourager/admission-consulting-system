@@ -1,0 +1,11 @@
+{% extends "information/base.html" %}
+
+{% block content %}
+  <p>录入信息</p>
+
+  <form action="{% url 'information:new_stu' %}" method='post'>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button name="submit">Submit</button>
+  </form>
+{% endblock content %}
