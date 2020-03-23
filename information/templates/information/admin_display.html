@@ -56,9 +56,13 @@
         <th type="number">电话</th>
         <th type="string">毕业高中</th>
         <th type="string">文理科</th>
-        <th type="string">意向专业</th>
+        <th type="string">意向专业一</th>
+        <th type="string">意向专业二</th>
+        <th type="string">意向专业三</th>
         <th type="number">志愿顺序</th>
+        <th type="string">报考国际学院</th>
         <th type="string" width="140">备注</th>
+        <th type="string">录入省份</th>
         <th type="string">录入地点</th>
         <th type="string">录入人员</th>
         <th type="string">录入日期</th>
@@ -77,11 +81,15 @@
         <td>{{ data.tele }}</td>
         <td>{{ data.high_school }}</td>
         <td>{{ data.sciorart }}</td>
-        <td>{{ data.major }}</td>
+        <td>{{ data.major1 }}</td>
+        <td>{{ data.major2 }}</td>
+        <td>{{ data.major3 }}</td>
         <td>{{ data.application_rank }}</td>
+        <td>{{ data.is_international }}</td>
         <td width="140">{{ data.tip }}</td>
+        <td>{{ data.province }}</td>
         <td>{{ data.place }}</td>
-        <td>{{ data.staff_id }}</td>
+        <td>{{ data.staff.first_name }}</td>
         <td>{{ data.date }}</td>
         <td>{{ data.time }}</td>
         <td> <a href="{% url 'information:admin_edit' data.id %}">{{ "修改" }}</a></td>
@@ -93,6 +101,9 @@
   </table>
   <div>
     <p><a href="/output">导出excel</a></p>
+  </div>
+  <div>
+    <p><a href="{% url 'information:index' %}">返回首页</a></p>
   </div>
   <script type="text/javascript">
       $(document).ready(function(){

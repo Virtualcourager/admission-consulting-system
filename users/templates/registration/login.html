@@ -5,14 +5,14 @@
   {% if form.errors %}
     <p>Your username and password didn't match. Please try again.</p>
   {% endif %}
-
+<p>请使用已注册的账号登陆</p>
   <form method="post" action="{% url 'users:login' %}">
     {% csrf_token %}
     {{ form.as_p }}
 
     <button name="submit">Log in</button>
     <input type="hidden" name="next"
-      value="{% url 'information:index' %}" />
+      value="{% url 'users:place' %}" />
   </form>
 
 {% endblock content %}
