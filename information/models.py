@@ -2,8 +2,9 @@ from django.db import models
 from django.contrib.auth.models import User
 # Create your models here.
 class MajorInfo(models.Model):
-    major_name = models.CharField(max_length=15)
-
+    major_name = models.CharField(max_length=30)
+    sciorart = models.ForeignKey('SciorArt', on_delete=models.CASCADE)
+    is_international=models.BooleanField()
     def __str__(self):
         return self.major_name
 class SciorArt(models.Model):
@@ -37,6 +38,7 @@ class StuInfo(models.Model):
 
 class RankPredict(models.Model):
     province = models.ForeignKey('users.Province',on_delete=models.CASCADE)
+    sciorart = models.ForeignKey('SciorArt', on_delete=models.CASCADE,default=1)
     score = models.PositiveSmallIntegerField()
-    highrank = models.PositiveSmallIntegerField()
-    lowrank = models.PositiveSmallIntegerField()
+    highrank = models.PositiveSmallIntegerField(null=True,blank=True)
+    lowrank = models.PositiveSmallIntegerField(null=True,blank=True)

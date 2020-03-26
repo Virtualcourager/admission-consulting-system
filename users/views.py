@@ -16,6 +16,10 @@ def register(request):
 
         if form.is_valid():
             new_user=form.save()
+            try:
+                UserProfile.objects.get(user_id=new_user.id)
+            except UserProfile.DoesNotExist:
+                models.UserProfile.objects.create(user_id=new_user.id)
             return HttpResponseRedirect(reverse('information:index'))
 
     context={'form':form}
@@ -39,7 +43,7 @@ def place(request):
         form=PlaceInfoForm(instance=cur,data=request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('information:store_success'))
+            return HttpResponseRedirect(reverse('information:index'))
 
     context = {'cur': cur, 'form': form}
     return render(request, 'users/place.html', context)

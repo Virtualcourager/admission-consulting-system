@@ -1,6 +1,7 @@
 {%extends "information/base.html"%}
 {%block content%}
-<p>Student Information Collect Home</p>
+<p>考生信息收集主页</p>
 <p> <a href="{% url 'information:new_stu' %}"> 填写信息 </a></p>
-<p> 已填写过？<a href="{% url 'information:search_info' %}"> 查询/修改信息 </a></p>
+<p> 已填写过？<br>
+    <a href="{% url 'information:search_info' %}"> 查询并修改您的信息 </a></p>
 {% endblock content%}

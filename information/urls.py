@@ -14,4 +14,5 @@ urlpatterns=[
     path('admin_edit/<int:info_id>',views.admin_edit,name='admin_edit'),
     path('output',views.output,name='output'),
     path('down', views.down, name='down'),
+    path('rank_display/', views.rank_display, name='rank_display'),
 ]

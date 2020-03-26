@@ -1,0 +1,12 @@
+{% extends "information/base.html" %}
+
+{% block content %}
+  <p>修改账号权限</p>
+  <p>账号：{{info.username}}</p>
+  <p>姓名：{{info.first_name}}</p>
+  <form action="{% url 'managesite:account_edit' info.id %}" method='post'>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button name="submit">Save</button>
+  </form>
+{% endblock content %}

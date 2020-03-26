@@ -44,72 +44,44 @@
     </style>
   </head>
 
-  <h2>考生统计信息</h2>
-  <p>生源省份</p>
-  <div class="count">
-    <a href="?ct="><span class="active2">全部</span></a>
-    <a href="?province={{ default.id }}"><span class="">{{ default.province }}</span></a>
-    {% for province in provinces %}
-      <a href="?province={{ province.id }}"><span class="">{{ province.province }}</span></a>
-    {% endfor %}
+  <h2>网站账号信息</h2>
   </div>
   <table id="tableSort">
     <thead>
       <tr>
-        <th type="number">ID</th>
-        <th type="number" width="140">考号</th>
-        <th type="string">姓名</th>
-        <th type="number">分数</th>
-        <th type="number">排名</th>
-        <th type="number">电话</th>
-        <th type="string">毕业高中</th>
-        <th type="string">文理科</th>
-        <th type="string">意向专业一</th>
-        <th type="string">意向专业二</th>
-        <th type="string">意向专业三</th>
-        <th type="number">志愿顺序</th>
-        <th type="string">报考国际学院</th>
-        <th type="string" width="140">备注</th>
-        <th type="string">录入省份</th>
-        <th type="string">录入地点</th>
-        <th type="string">录入人员</th>
-        <th type="string">录入日期</th>
-        <th type="string">录入时间</th>
-        <th type="string">操作</th>
+        <th type="number" width="30">ID</th>
+        <th type="string" width="140">用户名</th>
+        <th type="string" width="140">姓名</th>
+        <th type="string" width="50">是否激活</th>
+        <th type="string" width="50">管理员权限</th>
+        <th type="string" width="50">超级用户权限</th>
+        <th type="number" width="140">电话</th>
+        <th type="string" width="60">咨询省份</th>
+        <th type="string">上次咨询地点</th>
+        <th type="string">创建时间</th>
+        <th type="string">最后登录时间</th>
+        <th type="string" width="120">操作</th>
       </tr>
     </thead>
     <tbody>
-    {% for data in datas %}
+    {% for data in data %}
       <tr>
-        <td>{{ data.id }}</td>
-        <td width="140">{{ data.testnum }}</td>
-        <td>{{ data.name }}</td>
-        <td>{{ data.score }}</td>
-        <td>{{ data.rank }}</td>
-        <td>{{ data.tele }}</td>
-        <td>{{ data.high_school }}</td>
-        <td>{{ data.sciorart }}</td>
-        <td>{{ data.major1 }}</td>
-        <td>{{ data.major2 }}</td>
-        <td>{{ data.major3 }}</td>
-        <td>{{ data.application_rank }}</td>
-        <td>{{ data.is_international }}</td>
-        <td width="140">{{ data.tip }}</td>
-        <td>{{ data.province }}</td>
-        <td>{{ data.place }}</td>
-        <td>{{ data.staff.first_name }}</td>
-        <td>{{ data.date }}</td>
-        <td>{{ data.time }}</td>
-        <td> <a href="{% url 'information:admin_edit' data.id %}">{{ "修改" }}</a></td>
+        <td width="30">{{ data.id }}</td>
+        <td width="140">{{ data.username }}</td>
+        <td>{{ data.first_name }}</td>
+        <td>{{ data.is_active }}</td>
+        <td>{{ data.is_staff }}</td>
+        <td>{{ data.is_superuser }}</td>
+        <td>{{ data.profile.telephone }}</td>
+        <td>{{ data.profile.province }}</td>
+        <td>{{ data.profile.place }}</td>
+        <td>{{ data.date_joined }}</td>
+        <td>{{ data.last_login }}</td>
+        <td> <a href="{% url 'managesite:account_edit' data.id %}">{{ "更改权限" }}</a></td>
       </tr>
-    </tbody>
-    {% empty %}
-      <h2>还未有学生提交</h2>
     {% endfor %}
+        </tbody>
   </table>
-  <div>
-    <p><a href="/output">导出excel</a></p>
-  </div>
   <div>
     <p><a href="{% url 'information:index' %}">返回首页</a></p>
   </div>

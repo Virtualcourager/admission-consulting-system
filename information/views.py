@@ -4,14 +4,16 @@ from django.urls import resolve
 from django.shortcuts import render,redirect
 from django.http import HttpResponseRedirect,Http404
 from django.urls import reverse
-from .models import StuInfo
+from .models import StuInfo,RankPredict
 from .forms import StuInfoForms,SearchForms,AdminEditForms
-from users.models import UserProfile
+from users.models import UserProfile, Province
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.views import View
 from django.shortcuts import render,HttpResponse
 import xlwt
+from . import models
+
 from io import StringIO,BytesIO
 def index(request):
     return render(request,'information/index.html')
@@ -25,6 +27,19 @@ def store_success(request):
 def store_failed(request):
     return render(request, 'information/store_failed.html')
 
+def update_predict(new_info):
+    try:
+        data = RankPredict.objects.get(score=new_info.score,province_id=new_info.province_id,sciorart_id=new_info.sciorart_id)
+        if data.highrank > new_info.rank:
+            data.highrank = new_info.rank
+        if data.lowrank < new_info.rank:
+            data.lowrank = new_info.rank
+    except RankPredict.DoesNotExist:
+        models.RankPredict.objects.create(score=new_info.score,province_id=new_info.province_id,sciorart_id=new_info.sciorart_id)
+        data = RankPredict.objects.get(score=new_info.score, province_id=new_info.province_id,sciorart_id=new_info.sciorart_id)
+        data.highrank= new_info.rank
+        data.lowrank = new_info.rank
+    data.save()
 def dupcheck(request,form):
     data = form.cleaned_data
     curnum = data['testnum']
@@ -37,11 +52,12 @@ def dupcheck(request,form):
         new_info=form.save(commit=False)
         cur= request.user
         new_info.staff = cur
-        curprofile=UserProfile.objects.get(user=cur)
+        curprofile = UserProfile.objects.get(user=cur)
         new_info.province=curprofile.province
         new_info.place=curprofile.place
         if new_info.major1.id>=13 :
             new_info.is_international=True
+        update_predict(new_info)
         new_info.save()
         return HttpResponseRedirect(reverse('information:store_success'))
     else:
@@ -94,10 +110,24 @@ def edit_info(request,info_id ,info_testnum):
     context = {'info':info,'form': form}
     return render(request, 'information/edit_info.html', context)
 
+def admin_only(request):
+    if request.user.is_staff is False:
+        raise Http404
+
 @login_required
 def admin_display(request):
+    admin_only(request)
     data = StuInfo.objects.all()
-    context={'datas': data}
+    provinces= Province.objects.all()
+    curprofile = UserProfile.objects.get(user=request.user)
+    default = curprofile.province
+    if not default:
+        default = 1
+    province_id = request.GET.get('province','')
+    if province_id:
+        data = StuInfo.objects.filter(province=province_id)
+
+    context={'datas': data, 'provinces': provinces, 'default': default}
     return render(request,'information/admin_display.html',context)
 
 @login_required
@@ -172,3 +202,19 @@ def output(request):
 @login_required
 def down(request):
     return render(request,'download.html')
+
+def rank_display(request):
+    admin_only(request)
+    provinces= Province.objects.all()
+    curprofile = UserProfile.objects.get(user=request.user)
+    default = curprofile.province
+    province_id = request.GET.get('province','')
+    if not province_id:
+        province_id=default
+    scidata = []
+    artdata = []
+    if province_id:
+        scidata = RankPredict.objects.filter(province=province_id,sciorart=1).order_by('score')
+        artdata = RankPredict.objects.filter(province=province_id, sciorart=2).order_by('score')
+    context={'scidata': scidata,'artdata': artdata, 'provinces': provinces, 'default': default}
+    return render(request,'information/rank_display.html',context)
