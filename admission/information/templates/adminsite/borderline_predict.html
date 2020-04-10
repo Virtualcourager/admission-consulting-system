@@ -1,0 +1,173 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title> 统计信息 </title>
+    <meta charset="utf-8">
+    <meta name="Generator" content="EditPlus">
+    <meta name="Author" content="tschengbin">
+    <meta name="Keywords" content="jquery tableSort">
+    <meta name="Description" content="">
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <style type="text/css">
+        p{
+            width: 1024px;
+            margin: 0 auto;
+        }
+        table{
+            border: solid 1px #666;
+            border-collapse: collapse;
+            width: 100%;
+            cursor: default;
+            table-layout: fixed;
+        }
+        tr{
+            border: solid 1px #666;
+            height: 30px;
+        }
+        table thead tr{
+            background-color: #ccc;
+        }
+        td{
+            border: solid 1px #666;
+            white-space:nowrap;
+            overflow:hidden;
+            text-overflow: ellipsis;
+        }
+        th{
+            border: solid 1px #666;
+            text-align: center;
+            cursor: pointer;
+        }
+        .sequence{
+            text-align: center;
+        }
+    </style>
+  </head>
+
+  <h2>录取分数预测</h2>
+  <div>生源省份:</div>
+  <div class="count">
+    <a href="?province={{ default.id }}"><span class="">{{ default.province }}</span></a>
+    {% for province in provinces %}
+      <a href="?province={{ province.id }}"><span class="">{{ province.province }}</span></a>
+    {% endfor %}
+  </div>
+  <table id="tableSort">
+    <thead>
+      <tr>
+        <th type="number" width="200">专业</th>
+        <th type="string" width="140">预测录取线最低分数</th>
+        <th type="number" width="140">预测录取线最噶分数</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for data in datas %}
+      <tr>
+        <td>{{ data.major }}</td>
+        <td>{{ data.lowscore }}</td>
+        <td>{{ data.highscore }}</td>
+        </tr>
+    </tbody>
+    {% empty %}
+      <h2>还未有学生提交</h2>
+    {% endfor %}
+  </table>
+  <div>
+    显示0-1000分表示目前搜集的数据不足以进行预测
+  </div>
+  <div>
+    <p><a href="{% url 'information:index' %}">返回首页</a></p>
+  </div>
+  <script type="text/javascript">
+      $(document).ready(function(){
+           var tableObject = $('#tableSort');
+           var tbHead = tableObject.children('thead');
+           var tbHeadTh = tbHead.find('tr th');
+           var tbBody = tableObject.children('tbody');
+           var tbBodyTr = tbBody.find('tr');
+           var sortIndex = -1;
+           tbHeadTh.each(function()
+           {
+               var thisIndex = tbHeadTh.index($(this));
+               $(this).mouseover(function()
+               {
+                   tbBodyTr.each(function()
+                   {
+                       var tds = $(this).find("td");
+                       $(tds[thisIndex]).addClass("hover");
+                   });
+               }).mouseout(function()
+               {
+                    tbBodyTr.each(function()
+                    {
+                        var tds = $(this).find("td");
+                        $(tds[thisIndex]).removeClass("hover");
+                    });
+                });
+                $(this).click(function()
+                {
+                    var dataType = $(this).attr("type");
+                    checkColumnValue(thisIndex, dataType);
+                });
+            });
+
+            $("tbody tr").removeClass();
+            $("tbody tr").mouseover(function()
+            {
+                $(this).addClass("hover");
+            }).mouseout(function()
+            {
+                $(this).removeClass("hover");
+            });
+
+            function checkColumnValue(index, type) {
+                var trsValue = new Array();
+                tbBodyTr.each(function()
+                {
+                    var tds = $(this).find('td');
+                    trsValue.push(type + ".separator" + $(tds[index]).html() + ".separator" + $(this).html());
+                    $(this).html("");
+                });
+                var len = trsValue.length;
+                if(index == sortIndex){
+                    trsValue.reverse();
+                }
+                else
+                {
+                    for(var i = 0; i < len; i++){
+                        type = trsValue[i].split(".separator")[0];
+                        for(var j = i + 1; j < len; j++){
+                            value1 = trsValue[i].split(".separator")[1];
+                            value2 = trsValue[j].split(".separator")[1];
+                            if(type == "number"){
+                                value1 = value1 == "" ? 0 : value1;
+                                value2 = value2 == "" ? 0 : value2;
+                                if(parseFloat(value1) > parseFloat(value2))
+                                {
+                                    var temp = trsValue[j];
+                                    trsValue[j] = trsValue[i];
+                                    trsValue[i] = temp;
+                                }
+                            }
+                            else
+                            {
+                                if (value1.localeCompare(value2) > 0)
+                                {
+                                    var temp = trsValue[j];
+                                    trsValue[j] = trsValue[i];
+                                    trsValue[i] = temp;
+                                }
+                            }
+                        }
+                    }
+                }
+                for(var i = 0; i < len; i++)
+                {
+                    $("tbody tr:eq(" + i + ")").html(trsValue[i].split(".separator")[2]);
+                }
+                sortIndex = index;
+            }
+            })
+    </script>
+</body>
+</html>

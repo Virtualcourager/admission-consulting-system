@@ -1,0 +1,6 @@
+{%extends "information/base.html"%}
+{%block content%}
+  {% for file in file %}
+    <a href="{% url 'material:file' file.file_name %}">{{ file.name }}</a> <br> </br>
+  {% endfor %}
+{% endblock content%}
