@@ -11,16 +11,22 @@
 
 <p>全站信息管理:
   <a href="{% url 'managesite:account_state' %}">账号权限管理</a>---
-  <a href="{% url 'managesite:major_info' %}">专业信息管理</a>
+  <a href="{% url 'managesite:major_info' %}">专业信息管理</a>--
+  <a href="{% url 'material:upload' %}">上传招生宣传材料</a>--
+  <a href="{% url 'material:file_summary' %}">查看招生宣传材料</a>
 </p>
-<p>本省信息管理功能:
-    <a href="{% url 'information:admin_display' %}">收集信息汇总</a>---
-    <a href="{% url 'information:rank_display' %}">排名与分数关系预估</a>---
-    <a href="{% url 'adminsite:history_info' %}">历史录取排名录入</a>---
-    <a href="{% url 'adminsite:borderline_predict' %}">本年录取分数线预测</a>
+<p>本省信息管理功能：
+  <a href="{% url 'material:upload' %}">上传招生宣传材料</a>--
+  <a href="{% url 'material:file_summary' %}">修改本省招生宣传材料</a>--
+    <a href="{% url 'material:file_display' %}">查看招生宣传材料</a>--
+  <a href="{% url 'information:admin_display' %}">收集信息汇总</a>---
+  <a href="{% url 'information:rank_display' %}">排名与分数关系预估</a>---
+  <a href="{% url 'adminsite:history_info' %}">历史录取排名录入</a>---
+  <a href="{% url 'adminsite:borderline_predict' %}">本年录取分数线预测</a>
 </p>
 
 <p> 展示收集修改信息:
+  <a href="{% url 'material:file_display' %}">查看招生宣传材料</a>--
   <a href="{% url 'information:index' %}">考生信息录入/更改</a>---
   <a href="{% url 'users:place' %}">咨询地点更改</a>
 </p>

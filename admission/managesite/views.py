@@ -16,6 +16,10 @@ from django.contrib.auth.models import User
 import xlwt
 from io import StringIO,BytesIO
 # Create your views here.
+
+def access_deny(request):
+    return render(request,'managesite/access_deny.html')
+
 @login_required
 def account_state(request):
     if request.user.is_superuser is False:
@@ -30,6 +34,8 @@ def account_edit(request,user_id):
     if request.user.is_superuser is False:
         raise Http404
     info = User.objects.get(id=user_id)
+    if info.is_superuser is True:
+        return HttpResponseRedirect(reverse('managesite:access_deny'))
     if request.method != 'POST':
         form = AccountEditForm(instance=info)
     else:

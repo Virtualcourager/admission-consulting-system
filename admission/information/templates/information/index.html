@@ -1,7 +1,149 @@
-{%extends "information/base.html"%}
-{%block content%}
-<p>考生信息收集主页</p>
-<p> <a href="{% url 'information:new_stu' %}"> 填写信息 </a></p>
-<p> 已填写过？<br>
-    <a href="{% url 'information:search_info' %}"> 查询并修改您的信息 </a></p>
-{% endblock content%}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0046)https://zsb.bupt.edu.cn/list/list.php?p=10_8_1 -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    {% load static %}
+<link href="{% static "common.css" %}" rel="stylesheet" type="text/css">
+	{% load static %}
+<script src="{% static "hm.js.下载" %}"></script>
+    {% load static %}
+<script src="{% static "jquery-1.7.2.js.下载" %}" type="text/javascript" > </script>
+	{% load static %}
+<script type="text/javascript" src="{% static "jquery.sgallery.js.下载" %}"></script>
+	{% load static %}
+<script src="{% static "js.js.下载" %}" type="text/javascript"></script>
+<title>北京邮电大学招生宣传系统</title>
+</head>
+
+<body>
+<div class="head">
+<div class="header grd25 mar0a">
+		{% load static %}
+	<div class="logo lf"><a href="{% url 'information:index' %}"><img src="{% static "zslogo.jpg" %}" alt="北京邮电大学本科生招生网"></a></div>
+
+	<div class="top_right rt">
+    <ul class="h30 rt padtb10">
+		<p style="color:#fff;height:27px;">
+			{% if user.is_authenticated %}
+		    您好,{{ user.username }}.
+              <a class="top_nav" href="{% url 'users:logout' %}">注销</a>
+			{% else %}
+              <a class="top_nav" href="{% url 'users:register' %}">注册</a> ----
+              <a class="top_nav" href="{% url 'users:login' %}">登陆</a>
+             {% endif %}
+		</p>
+	</ul>
+		<div class="bk20"></div>
+	</div>
+	<div class="nav rt" id="top_nav">
+		<ul>
+					<li><a class="top_nav" id="nav_on" href="{% url 'information:index' %}">首  页</a>
+					    </li>
+					<li><a class="top_nav" href="{% url 'information:stu_menu' %}" target="_self">考生信息收集</a>
+						<dl>
+							<dd><a href="{% url 'information:new_stu' %}" target="_self">考生信息填写</a></dd>
+							<dd><a href="{% url 'information:search_info' %}" target="_self">考生信息更改</a></dd>
+						</dl>
+						</li>
+					<li><a class="top_nav" href="{% url 'material:file_display' %}" target="_self">招生资料展示</a>
+						</li>
+			        <li><a class="top_nav" href="{% url 'users:place' %}" target="_self">咨询地点及个人信息修改</a>
+					    </li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				</ul>
+	</div>
+
+
+
+
+<div class="bk"></div>
+</div> <!--/header-->
+</div> <!--/header--><div class="wrap">
+<div class="mar0a grd25">
+<div class="bk10"></div>
+		{% load static %}
+	<div id="mid-pic" ><img width="1000" height="150" src="{% static "banner.jpg" %}"></div>
+	<div class="bk10"></div>
+<div class="grd25">
+
+
+
+	<div class="bk10"></div>
+<div class="grd25">
+    <div class="lf marr20">
+	<div class="lf grd6 wrap_com padb10">
+		<div class="title h30 lh30 padl10 marr10"><h2 class="lf">联系方式</h2></div>
+		<div class="bk5"></div>
+		    		     <p class="lh20 padl20">教师：{{name}}老师</p>
+		    		     <p class="lh20 padl20">电话：{{tele}}</p>
+	</div>
+	</div>
+	</div>
+
+	</div><!--/left-->
+
+
+
+
+<div class="lf">
+	<div class="lf wrap_com grd9 padb10 ovhi marr20">
+		<div class="title h30 lh30 padlr10"><h2 class="lf"><a href="{% url 'information:stu_menu' %}" >考生信息填报主页</a></h2></div>
+		<div class="bk"></div>
+		<ul class="padlr10">
+			 <li><a class="lh50 h50 " href="{% url 'information:new_stu' %}" title="填写信息">填写信息</a></li>
+			 <li><a class="lh50 h50 " href="{% url 'information:search_info' %}" title="查询并修改信息">修改信息</a></li>
+        		</ul>
+	</div>
+	<div class="bk"></div>
+</div>
+		<div class="rt grd9 wrap_com padb10">
+		<div class="bk"></div>
+		<div class="title h30 lh30 padlr10"><h2 class="lf"><a href="{% url 'material:file_display' %}" >招生材料查看</a></h2><a class="more rt" href="{% url 'material:file_display' %}" >More</a></div>
+		<div class="bk"></div>
+		<ul class="padlr10">
+			 {% for file in file %}
+			    <li><a class="lh50 h50" href="{% url 'material:file' file.file_name %}">{{ file.name }}</a></li>
+            {% endfor %}
+		</ul>
+	</div>
+</div>
+</div>
+</div>
+<div class="bk10"></div>
+</div>
+<div class="bk"></div>
+</div>
+<div class="bk10"></div>
+</div><!--/wrap-->
+<div class="photo">
+<div class="pho grd25 mar0a">
+		<div class="title h30 lh30 padl10 marl10"><h2 class="lf"><a>校园风光</a></h2></div>
+		<div class="bk"></div>
+		<ul class="pho-ul">
+					 <li class="lf">
+						 {% load static %}
+						 <a class="disin lh25 textc" title="学校东门"><img src="{% static "dongmen.jpg" %}" width="170"><br>学校东门</a>
+					 </li>
+					 <li class="lf">
+						 {% load static %}
+						 <a class="disin lh25 textc" title="主楼广场"><img src="{% static "guangchang.jpg" %}" width="170"><br>主楼广场</a>
+					 </li>
+					 <li class="lf">
+						 {% load static %}
+						 <a class="disin lh25 textc" title="学生宿舍"><img src="{% static "sushe.jpg" %}" width="170"><br>学生宿舍</a>
+					 </li>
+					 <li class="lf">
+						 {% load static %}
+						 <a class="disin lh25 textc" title="北邮体育馆"><img src="{% static "tiyuguan.jpg" %}" width="170"><br>北邮体育馆</a>
+					 </li>
+					 <li class="lf">
+						 {% load static %}
+						 <a class="disin lh25 textc" title="教三楼"><img src="{% static "jiaosanlou.jpg" %}" width="170"><br>教三楼</a>
+					 </li>
+				<div class="bk"></div>
+		</ul>
+
+<div class="bk10"></div>
+</div>
+</div>
+
+</div>
+</body></html>

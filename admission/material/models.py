@@ -14,3 +14,4 @@ class ConsultMaterial(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='file')
     date = models.DateField(auto_now_add=True)
     time = models.TimeField(auto_now_add=True)
+    province_name=models.CharField(max_length=100,null=True)

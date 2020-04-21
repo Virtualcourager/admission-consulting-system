@@ -9,9 +9,9 @@
     <meta name="Description" content="">
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <style type="text/css">
+
         p{
             width: 1024px;
-            margin: 0 auto;
         }
         table{
             border: solid 1px #666;
@@ -44,8 +44,12 @@
     </style>
   </head>
 
-  <h2>考生统计信息</h2>
-  <div>生源省份:</div>
+  <h2 align="center">考生统计信息</h2>
+
+    <p><a href="{% url 'information:index' %}">返回首页</a></p>
+
+    <p><a href="/output/{{ cur_province }}">导出excel</a></p>
+  <div><h3>生源省份:</h3></div>
   <div class="count">
     <a href="?province={{ default.id }}"><span class="">{{ default.province }}</span></a>
     {% for province in provinces %}

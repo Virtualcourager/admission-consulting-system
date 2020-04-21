@@ -7,6 +7,7 @@ from django.urls import reverse
 from .models import StuInfo,RankPredict
 from .forms import StuInfoForms,SearchForms,AdminEditForms
 from users.models import UserProfile, Province
+from material.models import ConsultMaterial
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.views import View
@@ -15,11 +16,28 @@ import xlwt
 from . import models
 
 from io import StringIO,BytesIO
-def index(request):
-    return render(request,'information/index.html')
 
-def home(request):
-    return render(request,'information/home.html')
+@login_required
+def admin_index(request):
+    if request.user.is_superuser is True or request.user.is_staff is True:
+        return render(request, 'information/admin_index.html')
+    else:
+        raise Http404
+
+@login_required
+def index(request):
+    if request.user.is_superuser is True or request.user.is_staff is True:
+        return admin_index(request)
+    else:
+        user_province_id = UserProfile.objects.get(user=request.user).province.id
+        file = ConsultMaterial.objects.filter(province_id__in=[user_province_id, 0])[:2]
+        tele = UserProfile.objects.get(user=request.user).telephone
+        print(tele)
+        context = {'file': file, 'tele':tele, 'name':request.user.first_name}
+        return render(request,'information/index.html', context)
+
+def stu_menu(request):
+    return render(request,'information/stu_menu.html')
 
 def store_success(request):
     return render(request, 'information/store_success.html')

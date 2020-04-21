@@ -1,0 +1,16 @@
+{% extends "information/base.html" %}
+
+{% block content %}
+  <p>修改文件名称</p>
+  <p>如要修改文件，请删除原文件后重新上传</p>
+  <form action="{% url 'material:file_editname' info.id %}" method='post'>
+    {% csrf_token %}
+    {{ form.as_p }}
+  <p>适用范围：{{ info.province_name }}</p>
+  <p>添加人员：{{ info.user }}</p>
+  <p>添加日期：{{ info.date }}</p>
+  <p>添加时间：{{ info.time }}</p>
+  <p>文件预览： <a href="{% url 'material:file' info.file_name %}">{{ info.file_name }}</a> </p>
+  <button name="submit">确认修改 </button>
+  </form>
+{% endblock content %}

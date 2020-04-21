@@ -10,8 +10,9 @@ class UserCreationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('username', 'first_name')  # 改成想要的字段
+        fields = ('username', 'first_name')
         labels = {'username': '用户名', 'first_name': '姓名' }
+        help_texts={'username': ' '}
 
     def clean_password2(self):
         # Check that the two password entries match
