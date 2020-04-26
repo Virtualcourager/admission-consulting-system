@@ -1,7 +1,5 @@
-{% extends "information/base.html" %}
 
-{% block content %}
-  <p>历史排名信息</p>
+  <h2>历史排名信息</h2>
   <p>省份：{{info.province}}</p>
   <p>专业：{{info.major}}</p>
   <p>文理科：{{info.major.sciorart}}</p>
@@ -10,4 +8,3 @@
     {{ form.as_p }}
     <button name="submit">Save</button>
   </form>
-{% endblock content %}

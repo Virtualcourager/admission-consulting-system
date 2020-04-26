@@ -1,0 +1,7 @@
+ <h2>修改账号权限</h2>
+  <p>账号：{{info.username}}</p>
+  <form action="{% url 'managesite:account_edit' info.id %}" method='post'>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button name="submit">Save</button>
+  </form>

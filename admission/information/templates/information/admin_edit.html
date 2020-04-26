@@ -1,11 +1,8 @@
-{% extends "information/base.html" %}
 
-{% block content %}
-  <p>修改信息</p>
+  <h2>修改考生信息</h2>
 
   <form action="{% url 'information:admin_edit' info.id %}" method='post'>
     {% csrf_token %}
     {{ form.as_p }}
     <button name="submit">Save</button>
   </form>
-{% endblock content %}

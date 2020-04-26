@@ -1,0 +1,165 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title> 专业信息 </title>
+    <meta charset="utf-8">
+    <meta name="Generator" content="EditPlus">
+    <meta name="Author" content="tschengbin">
+    <meta name="Keywords" content="jquery tableSort">
+    <meta name="Description" content="">
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <style type="text/css">
+        p{
+            width: 1024px;
+            margin: 0 auto;
+        }
+        table{
+            border: solid 1px #666;
+            border-collapse: collapse;
+            width: 100%;
+            cursor: default;
+            table-layout: fixed;
+        }
+        tr{
+            border: solid 1px #666;
+            height: 30px;
+        }
+        table thead tr{
+            background-color: #ccc;
+        }
+        td{
+            border: solid 1px #666;
+            white-space:nowrap;
+            overflow:hidden;
+            text-overflow: ellipsis;
+        }
+        th{
+            border: solid 1px #666;
+            text-align: center;
+            cursor: pointer;
+        }
+        .sequence{
+            text-align: center;
+        }
+    </style>
+  </head>
+
+  </div>
+  <table id="tableSort">
+    <thead>
+      <tr>
+        <th type="number" width="30">ID</th>
+        <th type="string" width="140">专业名称</th>
+        <th type="string" width="140">文科/理科</th>
+        <th type="string" width="50">是否为国际学院</th>
+        <th type="string" width="120">操作</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for data in data %}
+      <tr>
+        <td width="30">{{ data.id }}</td>
+        <td width="140">{{ data.major_name }}</td>
+        <td>{{ data.sciorart }}</td>
+        <td>{{ data.is_international }}</td>
+        <td> <a href="{% url 'managesite:major_edit' data.id %}">{{ "更改权限" }}</a></td>
+      </tr>
+    {% endfor %}
+        </tbody>
+  </table>
+  <div>
+    <p><a href="{% url 'information:index' %}">返回首页</a></p>
+  </div>
+  <script type="text/javascript">
+      $(document).ready(function(){
+           var tableObject = $('#tableSort');
+           var tbHead = tableObject.children('thead');
+           var tbHeadTh = tbHead.find('tr th');
+           var tbBody = tableObject.children('tbody');
+           var tbBodyTr = tbBody.find('tr');
+           var sortIndex = -1;
+           tbHeadTh.each(function()
+           {
+               var thisIndex = tbHeadTh.index($(this));
+               $(this).mouseover(function()
+               {
+                   tbBodyTr.each(function()
+                   {
+                       var tds = $(this).find("td");
+                       $(tds[thisIndex]).addClass("hover");
+                   });
+               }).mouseout(function()
+               {
+                    tbBodyTr.each(function()
+                    {
+                        var tds = $(this).find("td");
+                        $(tds[thisIndex]).removeClass("hover");
+                    });
+                });
+                $(this).click(function()
+                {
+                    var dataType = $(this).attr("type");
+                    checkColumnValue(thisIndex, dataType);
+                });
+            });
+
+            $("tbody tr").removeClass();
+            $("tbody tr").mouseover(function()
+            {
+                $(this).addClass("hover");
+            }).mouseout(function()
+            {
+                $(this).removeClass("hover");
+            });
+
+            function checkColumnValue(index, type) {
+                var trsValue = new Array();
+                tbBodyTr.each(function()
+                {
+                    var tds = $(this).find('td');
+                    trsValue.push(type + ".separator" + $(tds[index]).html() + ".separator" + $(this).html());
+                    $(this).html("");
+                });
+                var len = trsValue.length;
+                if(index == sortIndex){
+                    trsValue.reverse();
+                }
+                else
+                {
+                    for(var i = 0; i < len; i++){
+                        type = trsValue[i].split(".separator")[0];
+                        for(var j = i + 1; j < len; j++){
+                            value1 = trsValue[i].split(".separator")[1];
+                            value2 = trsValue[j].split(".separator")[1];
+                            if(type == "number"){
+                                value1 = value1 == "" ? 0 : value1;
+                                value2 = value2 == "" ? 0 : value2;
+                                if(parseFloat(value1) > parseFloat(value2))
+                                {
+                                    var temp = trsValue[j];
+                                    trsValue[j] = trsValue[i];
+                                    trsValue[i] = temp;
+                                }
+                            }
+                            else
+                            {
+                                if (value1.localeCompare(value2) > 0)
+                                {
+                                    var temp = trsValue[j];
+                                    trsValue[j] = trsValue[i];
+                                    trsValue[i] = temp;
+                                }
+                            }
+                        }
+                    }
+                }
+                for(var i = 0; i < len; i++)
+                {
+                    $("tbody tr:eq(" + i + ")").html(trsValue[i].split(".separator")[2]);
+                }
+                sortIndex = index;
+            }
+            })
+    </script>
+</body>
+</html>

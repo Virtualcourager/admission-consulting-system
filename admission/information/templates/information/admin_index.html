@@ -78,23 +78,51 @@
 <div class="grd25">
 
 <div class="lf">
+	<div class="bk10"></div>
 	<div class="lf wrap_com grd9 padb10 ovhi marr20">
-		<div class="title h30 lh30 padlr10"><h2 class="lf"><a href="{% url 'information:index' %}" target="_blank">考生信息填报主页</a></h2></div>
+		<div class="title h30 lh30 padl10 marl10"><h2 class="lf"><a href="{% url 'information:admin_display' %}">收集信息汇总</a></h2></div>
 		<div class="bk"></div>
-		<ul class="padlr10">
-			 <li><a class="lh50 h50 " href="{% url 'information:new_stu' %}" title="填写信息">•&nbsp;填写信息</a></li>
-			 <li><a class="lh50 h50 " href="{% url 'information:search_info' %}" title="查询并修改信息">•&nbsp;修改信息</a></li>
-        		</ul>
 	</div>
-	<div class="bk"></div>
+
 	<div class="lf grd9 wrap_com padb10">
-		<div class="title h30 lh30 padl10 marl10"><h5 class="lf"><a href="https://zsb.bupt.edu.cn/list/list.php?p=0_3_1" target="_blank">招生政策</a></h5><a class="more rt" href="https://zsb.bupt.edu.cn/list/list.php?p=0_3_1" target="_blank">More</a></div>
+		<div class="title h30 lh30 padl10 marr10"><h2 class="lf"><a href="{% url 'adminsite:history_info' %}" >历史录取信息录入</a></h2></div>
+		<br></br>
+		<div class="bk"></div>
+	</div>
+
+
+<div class="bk"></div>
+
+	<div class="lf grd9 wrap_com padb10">
+		<div class="title h30 lh30 padl10 marl10"><h2 class="lf">系统预测信息</h2></div>
 		<div class="bk"></div>
 		<ul class="padlr10">
-
+					 <li><a class="lh28 h28 " href="{% url 'information:rank_display' %}">•&nbsp;排名分数关系预测</a></li>
+			         <li><a class="lh28 h28 " href="{% url 'adminsite:borderline_predict' %}">•&nbsp;录取分数线预测</a></li>
 				</ul>
 	</div>
+	<div class="rt grd9 wrap_com padb10">
+		<div class="title h30 lh30 padl10"><h2 class="lf">招生资料管理</h2></div>
+		<div class="bk"></div>
+		<ul class="padlr10">
+					 <li><a class="lh28 h28 " href="{% url 'material:file_display' %}">•&nbsp;本省招生资料查看</a></li>
+					 <li><a class="lh28 h28 " href="{% url 'material:upload' %}" target="_self">•&nbsp;招生资料上传</a></li>
+					 <li><a class="lh28 h28 " href="{% url 'material:file_summary' %}">•&nbsp;招生资料名称修改和删除</a></li>
+				</ul>
+	</div>
+<div class="bk10"></div>
+	<div class="lf grd9 wrap_com padb10">
+		<div class="title h30 lh30 padl10 marl10"><h2 class="lf">网站账号管理</h2></div>
+		<div class="bk"></div>
+		<ul class="padlr10">
+					 <li><a class="lh28 h28" href="{% url 'managesite:account_state' %}">•&nbsp;网站账号信息管理</a></li>
+					 <li><a class="lh28 h28" href="{% url 'managesite:major_info' %}">•&nbsp;招生专业信息管理</a></li>
+				</ul>
+	</div>
+	<div class="bk"></div>
 </div>
+
+
 </div>
 </div>
 </div>
