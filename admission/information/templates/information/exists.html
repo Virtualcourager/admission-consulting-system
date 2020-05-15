@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0046)https://zsb.bupt.edu.cn/list/list.php?p=10_8_1 -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    {% load static %}
+<link href="{% static "common.css" %}" rel="stylesheet" type="text/css">
+	{% load static %}
+<script src="{% static "hm.js.下载" %}"></script>
+    {% load static %}
+<script src="{% static "jquery-1.7.2.js.下载" %}" type="text/javascript" > </script>
+	{% load static %}
+<script type="text/javascript" src="{% static "jquery.sgallery.js.下载" %}"></script>
+	{% load static %}
+<script src="{% static "js.js.下载" %}" type="text/javascript"></script>
+<title>北京邮电大学招生宣传系统登陆</title>
+</head>
+
+<body>
+<div class="head">
+<div class="header grd25 mar0a">
+		{% load static %}
+	<div class="logo lf"><a href="{% url 'information:index' %}"><img src="{% static "zslogo.jpg" %}"" alt="北京邮电大学本科生招生网"></a></div>
+	<div class="top_right rt">
+    <ul class="h30 rt padtb10">
+		<p style="color:#fff;height:27px;">
+			{% if user.is_authenticated %}
+		    您好,{{ user.username }}.
+              <a class="top_nav" href="{% url 'users:logout' %}">注销</a>
+			{% else %}
+              <a class="top_nav" href="{% url 'users:register' %}">注册</a> ----
+              <a class="top_nav" href="{% url 'users:login' %}">登陆</a>
+             {% endif %}
+		</p>
+	</ul>
+		<div class="bk20"></div>
+	</div>
+	<div class="nav rt" id="top_nav">
+		<ul>
+					<li><a class="top_nav" href="{% url 'information:index' %}">首  页</a>
+					    </li>
+					<li><a class="top_nav" href="{% url 'information:stu_menu' %}" target="_self">考生信息收集</a>
+						<dl>
+							<dd><a href="{% url 'information:new_stu' %}" target="_self">考生信息填写</a></dd>
+							<dd><a href="{% url 'information:search_info' %}" target="_self">考生信息更改</a></dd>
+						</dl>
+						</li>
+					<li><a class="top_nav" href="{% url 'material:file_display' %}" target="_self">招生资料展示</a>
+						</li>
+			        <li><a class="top_nav" href="{% url 'users:place' %}" target="_self">咨询地点及个人信息修改</a>
+					    </li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				</ul>
+	</div>
+
+
+<div class="bk"></div>
+</div> <!--/header-->
+</div> <!--/header-->
+<div class="wrap">
+<div class="mar0a grd25">
+	<div class="bk10"></div>
+		{% load static %}
+	<div id="mid-pic" ><img width="1000" height="150" src="{% static "banner.jpg" %}"></div>
+<div class="bk10"></div>
+
+
+<div class="lf">
+	<div class="lf wrap_com grd9 padb10 ovhi marr20">
+		<h3>您已经填写过</h3>
+		<a href="{% url 'information:edit_info' info_id info_testnum %}" target="_self">点击修改您之前填写的信息</a>
+	<h3></h3>
+
+
+	</div>
+	<div class="bk"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="bk10"></div>
+</div>
+<div class="bk"></div>
+</div>
+<div class="bk10"></div>
+</div><!--/wrap-->
+
+
+</body></html>
+

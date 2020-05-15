@@ -20,7 +20,7 @@ def register(request):
                 UserProfile.objects.get(user_id=new_user.id)
             except UserProfile.DoesNotExist:
                 models.UserProfile.objects.create(user_id=new_user.id)
-            return HttpResponseRedirect(reverse('material:file_display'))
+            return HttpResponseRedirect(reverse('users:login'))
 
     context={'form':form}
     return render(request,'users/register.html',context)

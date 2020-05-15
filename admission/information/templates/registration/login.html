@@ -56,12 +56,13 @@
 </div> <!--/header-->
 <div class="wrap">
 <div class="mar0a grd25">
+	<div class="bk10"></div>
+		{% load static %}
+	<div id="mid-pic" ><img width="1000" height="150" src="{% static "banner.jpg" %}"></div>
 <div class="bk10"></div>
 
 
-<div class="lf">
-	<div class="lf wrap_com grd9 padb10 ovhi marr20">
-		<h2>北京邮电大学招生宣传系统登陆</h2>
+		<h2>北邮招生宣传系统登陆</h2>
 		  {% if form.errors %}
     <p>您的用户名或密码错误，请再试一次</p>
   {% endif %}
@@ -76,8 +77,6 @@
 
 	</div>
 	<div class="bk"></div>
-</div>
-</div>
 </div>
 </div>
 <div class="bk10"></div>

@@ -62,8 +62,6 @@
 <div class="bk10"></div>
 
 
-<div class="lf">
-	<div class="lf wrap_com grd9 padb10 ovhi marr20">
 		<h2>注册用户</h2>
   <form method="post" action="{% url 'users:register' %}">
     {% csrf_token %}
@@ -73,9 +71,7 @@
     <input type="hidden" name="next" value="{% url 'information:index' %}" />
   </form>
 
-	</div>
 	<div class="bk"></div>
-</div>
 </div>
 </div>
 </div>

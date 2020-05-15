@@ -45,6 +45,10 @@ def store_success(request):
 def store_failed(request):
     return render(request, 'information/store_failed.html')
 
+def exists(request,info_id ,info_testnum):
+    context = {'info_id': info_id, 'info_testnum': info_testnum}
+    return render(request, 'information/exists.html',context)
+
 def update_predict(new_info):
     try:
         data = RankPredict.objects.get(score=new_info.score,province_id=new_info.province_id,sciorart_id=new_info.sciorart_id)
@@ -85,7 +89,7 @@ def dupcheck(request,form):
         new_info.save()
         return HttpResponseRedirect(reverse('information:store_success'))
     else:
-        return HttpResponseRedirect(reverse('information:store_failed'))
+        return HttpResponseRedirect(reverse('information:exists', kwargs={"info_id":dup.id,"info_testnum":dup.testnum}))
 
 @login_required
 def new_stu(request):

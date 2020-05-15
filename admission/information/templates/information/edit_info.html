@@ -65,7 +65,7 @@
 <div class="lf">
 	<div class="lf wrap_com grd9 padb10 ovhi marr20">
 		<h2>考生信息修改</h2>
-  <form action="{% url 'information:new_stu' %}" method='post'>
+  <form action="{% url 'information:edit_info' info.id info.testnum %}" method='post'>
     {% csrf_token %}
     {{ form.as_p }}
     <button name="submit">提交</button>

@@ -10,6 +10,7 @@ urlpatterns=[
     path('new_stu/', views.new_stu, name='new_stu'),
     path('store_success/', views.store_success, name='store_success'),
     path('store_failed/', views.store_failed, name='store_failed'),
+    path('exists/<int:info_id>/<int:info_testnum>', views.exists, name='exists'),
     path('search_info/', views.search_info, name='search_info'),
     path('edit_info/<int:info_id>/<int:info_testnum>', views.edit_info, name='edit_info'),
     path('admin_display', views.admin_display, name='admin_display'),

@@ -20,6 +20,10 @@ from io import StringIO,BytesIO
 def access_deny(request):
     return render(request,'managesite/access_deny.html')
 
+def superuser_only(request):
+    if request.user.is_superuser is False:
+        raise Http404
+
 @login_required
 def account_state(request):
     if request.user.is_superuser is False:
@@ -68,3 +72,15 @@ def major_edit(request,major_id):
             return HttpResponseRedirect(reverse('managesite:major_info'))
     context = {'info': info, 'form': form, major_id:'major_id'}
     return render(request, 'major_edit.html', context)
+
+@login_required
+def new_major(request):
+    if request.method!='POST':
+        form=MajorEditForm()
+    else:
+        form=MajorEditForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('managesite:major_info'))
+    context = {'form': form}
+    return render(request, 'new_major.html', context)

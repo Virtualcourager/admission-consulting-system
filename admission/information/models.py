@@ -21,7 +21,7 @@ class StuInfo(models.Model):
     tele = models.CharField(max_length=20)                          #电话
     high_school = models.CharField(max_length=30)                   #毕业学校
     sciorart = models.ForeignKey('SciorArt',on_delete=models.CASCADE)
-    major1 = models.ForeignKey('MajorInfo',on_delete=models.CASCADE,null=True,blank=True,related_name='major1')
+    major1 = models.ForeignKey('MajorInfo',on_delete=models.CASCADE,related_name='major1')
     major2 = models.ForeignKey('MajorInfo', on_delete=models.CASCADE,null=True,blank=True,related_name='major2')
     major3 = models.ForeignKey('MajorInfo', on_delete=models.CASCADE,null=True,blank=True,related_name='major3')
     is_international = models.BooleanField(default=False)
