@@ -84,3 +84,8 @@ def new_major(request):
             return HttpResponseRedirect(reverse('managesite:major_info'))
     context = {'form': form}
     return render(request, 'new_major.html', context)
+
+def delete(request,info_id):
+    data=MajorInfo.objects.get(id=info_id)
+    data.delete()
+    return HttpResponseRedirect(reverse('managesite:major_info'))

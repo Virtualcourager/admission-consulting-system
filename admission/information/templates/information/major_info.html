@@ -43,7 +43,9 @@
         }
     </style>
   </head>
-
+  <h2 align="center">专业信息管理</h2>
+      <p><a href="{% url 'managesite:new_major' %}">增加专业</a></p>
+    <p><a href="{% url 'information:index' %}">返回首页</a></p>
   </div>
   <table id="tableSort">
     <thead>
@@ -62,7 +64,7 @@
         <td width="140">{{ data.major_name }}</td>
         <td>{{ data.sciorart }}</td>
         <td>{{ data.is_international }}</td>
-        <td> <a href="{% url 'managesite:major_edit' data.id %}">{{ "更改权限" }}</a></td>
+        <td> <a href="{% url 'managesite:major_edit' data.id %}">{{ "更改信息" }}</a>     <a href="" onclick="javascript:if (confirm('确认删除？')) href='{% url 'managesite:delete' data.id %} '; else return;" >{{ "删除" }}</a></td>
       </tr>
     {% endfor %}
         </tbody>
